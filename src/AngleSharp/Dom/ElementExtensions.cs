@@ -1522,6 +1522,12 @@ namespace AngleSharp.Dom
                 // Set if node has id attribute set...
                 hasId = !String.IsNullOrEmpty(element.Id);
 
+                // Check the element owner document for a duplicate id
+                if (hasId) {
+                    var isUnique = element.Owner?.ChildNodes.QuerySelectorAll($"[id='{element.Id}']").Count() == 1;
+                    hasId = isUnique;
+                }
+
                 // Get parent element of the node
                 var parent = element.ParentElement;
 
